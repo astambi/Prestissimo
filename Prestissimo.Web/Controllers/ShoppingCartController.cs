@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Services;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -147,6 +148,11 @@
                 .Select(i => $"{i.RecordingId}:{i.FormatId}")
                 .ToList();
 
+            var itemQuantitiesInStore = this.db
+                .RecordingFormats
+                .Where(rf => itemIds.Contains($"{rf.RecordingId}:{rf.FormatId}"))
+                .ToDictionary(i => $"{i.RecordingId}:{i.FormatId}", i => i.Quantity);
+
             var itemQuantities = items.ToDictionary(i => $"{i.RecordingId}:{i.FormatId}", i => i.Quantity);
 
             var itemsWithDetails = this.db
@@ -156,7 +162,9 @@
                 .ToList();
 
             itemsWithDetails
-                .ForEach(i => i.Quantity = itemQuantities[$"{i.RecordingId}:{i.FormatId}"]);
+                .ForEach(i => i.Quantity = Math.Min(
+                    itemQuantities[$"{i.RecordingId}:{i.FormatId}"],
+                    itemQuantitiesInStore[$"{i.RecordingId}:{i.FormatId}"]));
 
             return itemsWithDetails;
         }
