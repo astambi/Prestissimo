@@ -31,6 +31,24 @@
 
         public IActionResult AddToCart(int recordingId, int formatId)
         {
+            var recordingFormat = this.db
+                .RecordingFormats
+                .Where(rf => rf.FormatId == formatId
+                        && rf.RecordingId == recordingId)
+                .FirstOrDefault();
+
+            if (recordingFormat == null)
+            {
+                this.TempData.AddErrorMessage(WebConstants.RecordingWithFormatNotFound);
+                return this.RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+
+            if (recordingFormat.Quantity == 0)
+            {
+                this.TempData.AddErrorMessage(WebConstants.RecordingWithFormatZeroQuantity);
+                return this.RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+
             var shoppingCartId = this.HttpContext.Session.GetShoppingCartId();
             this.shoppingCartManager.AddToCart(shoppingCartId, recordingId, formatId);
 

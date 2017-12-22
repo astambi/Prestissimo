@@ -37,6 +37,7 @@
         public async Task<IEnumerable<CartItemWithDetailsServiceModel>> GetRecordingsAsync()
             => await this.db
                 .RecordingFormats
+                .Where(rf => rf.Quantity > 0)
                 .ProjectTo<CartItemWithDetailsServiceModel>()
                 .OrderByDescending(rf => rf.ReleaseDate)
                 .ThenBy(rf => rf.RecordingTitle)

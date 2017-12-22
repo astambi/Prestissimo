@@ -16,5 +16,7 @@
         public const string OrderInvalidData = "Invalid order data.";
 
         public const string RecordingNotFound = "Recording not found.";
+        public const string RecordingWithFormatNotFound = "Recording with requested format not found.";
+        public const string RecordingWithFormatZeroQuantity = "Recording with requested format is not currently in stock.";
     }
 }
