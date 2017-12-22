@@ -118,6 +118,15 @@
                     Price = item.Price,
                     Discount = item.Discount
                 });
+
+                // update Qty in RecordingFormat
+                var recordingFormat = this.db
+                    .RecordingFormats
+                    .Where(rf => rf.FormatId == item.FormatId 
+                              && rf.RecordingId == item.RecordingId)
+                    .FirstOrDefault();
+                recordingFormat.Quantity -= item.Quantity;
+                this.db.RecordingFormats.Update(recordingFormat);
             }
 
             order.OrderItems = orderItems;
@@ -131,6 +140,7 @@
 
             await this.db.Orders.AddAsync(order);
             await this.db.SaveChangesAsync();
+
             this.TempData.AddSuccessMessage(WebConstants.OrderCompleted);
 
             this.shoppingCartManager.Clear(shoppingCartId);
