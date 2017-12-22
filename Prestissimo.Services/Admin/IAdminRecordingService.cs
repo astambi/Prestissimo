@@ -20,7 +20,7 @@
 
         Task<TModel> GetByIdAsync<TModel>(int id) where TModel : class;
 
-        Task<AdminFormatPriceQuantityServiceModel> GetPricingAsync(int id, int formatId); // todo
+        Task<AdminFormatPriceQuantityServiceModel> GetPricingAsync(int id, int formatId); 
 
         Task<AdminRecordingFormatNamesServiceModel> GetRecordingFormatNames(int id, int formatId);
 

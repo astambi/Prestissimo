@@ -112,7 +112,7 @@
             => await this.db
                 .Recordings
                 .Where(r => r.Id == id)
-                .ProjectTo<TModel>(new { id }) // TODO test for errors in working code
+                .ProjectTo<TModel>(new { id }) 
                 .FirstOrDefaultAsync();
 
         public async Task<IEnumerable<AdminFormatPriceQuantityServiceModel>> GetFormatsAsync(int id)

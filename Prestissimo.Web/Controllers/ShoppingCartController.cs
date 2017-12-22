@@ -133,7 +133,7 @@
 
             var itemsWithDetails = this.db
                 .RecordingFormats
-                .Where(rf => itemIds.Contains($"{rf.RecordingId}:{rf.FormatId}")) // todo ?
+                .Where(rf => itemIds.Contains($"{rf.RecordingId}:{rf.FormatId}")) // todo refactoring 
                 .ProjectTo<CartItemViewModel>()
                 .ToList();
 

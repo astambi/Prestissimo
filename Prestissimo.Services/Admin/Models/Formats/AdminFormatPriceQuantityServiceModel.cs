@@ -5,7 +5,7 @@
     using Data.Models;
     using System.ComponentModel.DataAnnotations;
 
-    public class AdminFormatPriceQuantityServiceModel : IMapFrom<RecordingFormat>, IHaveCustomMapping // todo !!!
+    public class AdminFormatPriceQuantityServiceModel : IMapFrom<RecordingFormat>, IHaveCustomMapping 
     {
         public int Id { get; set; }
 
