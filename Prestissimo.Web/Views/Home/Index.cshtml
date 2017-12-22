@@ -1,0 +1,53 @@
+﻿@model IEnumerable<CartItemWithDetailsServiceModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="jumbotron home-jumbotron">
+    <h1 class="text-center">Welcome to Prestissimo!</h1>
+</div>
+
+<div class="row">
+    @foreach (var recording in Model)
+    {
+        <div class="col-sm-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <a asp-controller="Recordings" asp-action=@nameof(RecordingsController.Details)
+                       asp-route-id=@recording.RecordingId>
+                        <img class="img-responsive" src=@recording.ImageUrl alt=@recording.RecordingTitle>
+                    </a>
+                    <h3 class=" text-center">
+                        @recording.RecordingTitle
+                    </h3>
+                    <hr />
+                    <h3 class="panel-title text-center">
+                        @recording.LabelName
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <h4 class="text-muted text-center">
+                        <strong>
+                            Format @recording.FormatName
+                        </strong>
+                    </h4>
+                    <h4 class="text-muted text-center">Price @recording.Price.ToCurrency()</h4>
+                    <h4 class="text-muted text-center">Discount @recording.Discount%</h4>
+                    <h4 class="text-center text-primary">
+                        <strong>
+                            Net Price @((recording.Price * (1 - (decimal)recording.Discount / 100)).ToCurrency())
+                        </strong>
+                    </h4>
+                    <a asp-area=""
+                       asp-controller="ShoppingCart"
+                       asp-action=@nameof(ShoppingCartController.AddToCart)
+                       asp-route-recordingId=@recording.RecordingId
+                       asp-route-formatId=@recording.FormatId
+                       class="btn btn-success center-block btn-lg">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<hr />
