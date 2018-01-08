@@ -16,7 +16,7 @@
                 <div class="panel-heading">
                     <a asp-controller="Recordings" asp-action=@nameof(RecordingsController.Details)
                        asp-route-id=@recording.RecordingId>
-                        <img class="img-responsive" src=@recording.ImageUrl alt=@recording.RecordingTitle>
+                        <img class="img-responsive" src=@recording.ImageUrl alt=@recording.RecordingTitle width="350">
                     </a>
                     <h3 class=" text-center">
                         @recording.RecordingTitle

@@ -93,6 +93,15 @@
         {
             var shoppingCartId = this.HttpContext.Session.GetShoppingCartId();
 
+            if (orderTotal <= 0)
+            {
+                this.TempData.AddErrorMessage(WebConstants.ShoppingCartIsEmpty);
+
+                this.shoppingCartManager.Clear(shoppingCartId);
+
+                return this.RedirectToAction(nameof(Items));
+            }
+
             var cartItems = this.GetShoppingCartItems();
             var order = new Order
             {
@@ -119,10 +128,10 @@
                     Discount = item.Discount
                 });
 
-                // update Qty in RecordingFormat
+                // update remaining Qty in db
                 var recordingFormat = this.db
                     .RecordingFormats
-                    .Where(rf => rf.FormatId == item.FormatId 
+                    .Where(rf => rf.FormatId == item.FormatId
                               && rf.RecordingId == item.RecordingId)
                     .FirstOrDefault();
                 recordingFormat.Quantity -= item.Quantity;
